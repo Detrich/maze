@@ -1,0 +1,30 @@
+:root {
+    --cell-size: 20px;
+    --border: 1px solid black;
+}
+
+body {
+    background-color: #ca3232;
+}
+
+.mazeContainer {
+    display: inline-flex;
+    flex-direction: column;
+  
+    border: var(--border);
+}
+
+.classRow {
+    display:flex;
+    flex-direction: row;
+    border: var(--border);
+    height: 20px;
+
+}
+
+.cell {
+
+    border: var(--border);
+    height: var(--cell-size);
+    width: var(--cell-size);
+}
