@@ -1,16 +1,30 @@
 :root {
-    --cell-size: 20px;
-    --border: 1px solid black;
+    --cell-size: 30px;
+
 }
 
 body {
-    background-color: #ca3232;
+    
+    background-color:black;
+    background-image:
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+    radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+/* background from https://leaverou.github.io/css3patterns/#starry-night */
+    
+    display:flex;
+    align-items: center;
+    flex-direction: column;
 }
-
+h1{
+    color:white;
+}
 .mazeContainer {
     display: inline-flex;
     flex-direction: column;
-  
     border: var(--border);
 }
 
@@ -18,13 +32,31 @@ body {
     display:flex;
     flex-direction: row;
     border: var(--border);
-    height: 20px;
+    height: var(--border);
 
 }
 
 .cell {
 
     border: var(--border);
+    height: var(--cell-size);
+    width: var(--cell-size);
+}
+[data-maze-style="W"]{
+    background-color: #ADD8E6;
+}
+[data-maze-style="S"]{
+    background-color: green;
+}
+[data-maze-style="F"]{
+    background-color: #eee;
+    background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+    background-size: 4px 4px;
+    background-position: 0 0, 30px 30px;
+    /* checkerd flag from https://leaverou.github.io/css3patterns/#checkerboard */
+}
+.star{
     height: var(--cell-size);
     width: var(--cell-size);
 }
