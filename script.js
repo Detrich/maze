@@ -26,7 +26,7 @@ function createGrid() {
         gridModel.push(rowModel) //model
         let rowDivs = document.createElement("div") //view
         rowDivs.classList.add("classRow")
-
+        rowDivs.dataset.y = 14 - rowIndex
         selectContainer.appendChild(rowDivs)
 
         createCells(rowDivs, gridModel)
@@ -39,79 +39,109 @@ function createCells(view, model) {
 
         let cellDivs = document.createElement("div")
         cellDivs.classList.add("cell")
+        cellDivs.dataset.x = columnIndex
+
         view.appendChild(cellDivs)
         model.push("cell")
     }
 }
 createGrid()
 
-let stringMap = map.join("").replace(/,/g,'')
-const arrayOfCells= Array.from(document.querySelectorAll('.cell'))
+let stringMap = map.join("").replace(/,/g, '')
+const arrayOfCells = Array.from(document.querySelectorAll('.cell'))
 //adds the map to the cell divs
 arrayOfCells.forEach((cell, index) => {
-   
- cell.dataset.mazeStyle = stringMap[index]
+
+    cell.dataset.mazeStyle = stringMap[index]
 
 
 })
 
 
-const player = []
-let playerDiv = document.createElement("div")
+
 const image = document.createElement('img')
-function addstar(){
-image.src ="Star.png"
-image.classList.add("star")
-document.querySelector('[data-maze-style="S"]').appendChild(image)
+function addstar() {
+    image.src = "Star.png"
+    image.classList.add("star")
+    document.querySelector('[data-maze-style="S"]').appendChild(image)
 }
 
 addstar()
 
+//start at (5,0)
+const starImgParent = document.querySelector(".star").parentElement
+const starImg = document.querySelector(".star")
+
+const player = {
+    x: document.querySelector(".star").parentElement.dataset.x,
+    y: document.querySelector(".star").parentElement.parentElement.dataset.y
+}
+
+
+
 //click handler for star
-const moveStar = document.addEventListener('keydown',logKey)
+const moveStar = document.addEventListener('keydown', logKey)
 function logKey(evt) {
-    if (evt.keyCode == 39) {
-     
+
+    const currentLocationX = player.x
+    const currentLocationY = player.y
+    const starImgParent = document.querySelector(".star").parentElement
+    const starImg = document.querySelector(".star")
+
+
+    if (evt.key === "ArrowRight") {
+        let nextLocation = arrayOfCells.filter(cell => {
+            return cell.dataset.x == Number(currentLocationX) + 1 && cell.parentElement.dataset.y == currentLocationY
+        })
+        if (nextLocation[0].dataset.mazeStyle === "W") {
+            return
+        }
+        player.x = nextLocation[0].dataset.x
+        starImgParent.removeChild(starImg)
+        nextLocation[0].appendChild(starImg)
     } //right arrow
-    else if (evt.keyCode == 37) {
-     
+    else if (evt.key === "ArrowLeft") {
+        let nextLocation = arrayOfCells.filter(cell => {
+            return cell.dataset.x == Number(currentLocationX) - 1 && cell.parentElement.dataset.y == currentLocationY
+        })
+        if (nextLocation[0].dataset.mazeStyle === "W") {
+            return
+        }
+        player.x = nextLocation[0].dataset.x
+        starImgParent.removeChild(starImg)
+        nextLocation[0].appendChild(starImg)
+        console.log(player)
     } //left arrow
-    else if (evt.keyCode == 38) {
-    
+    else if (evt.key === "ArrowUp") {
+        let nextLocation = arrayOfCells.filter(cell => {
+            return cell.dataset.x == Number(currentLocationX) && cell.parentElement.dataset.y == Number(currentLocationY) + 1
+        })
+        if (nextLocation[0].dataset.mazeStyle === "W") {
+            
+            return
+        }
+        player.y = nextLocation[0].parentElement.dataset.y
+        starImgParent.removeChild(starImg)
+        nextLocation[0].appendChild(starImg)
+        console.log(player)
+
     } //up arrow
-    else if (evt.keyCode == 40) {
-      
+    else if (evt.key === "ArrowDown") {
+        let nextLocation = arrayOfCells.filter(cell => {
+            return cell.dataset.x == Number(currentLocationX) && cell.parentElement.dataset.y == Number(currentLocationY) - 1
+        })
+        if (nextLocation[0].dataset.mazeStyle === "W") {
+            return
+        }
+        player.y = nextLocation[0].parentElement.dataset.y
+        starImgParent.removeChild(starImg)
+        nextLocation[0].appendChild(starImg)
+
     }//down arrow
-  }
-//console.log(moveStar)
+    if(player.x == 20 && player.y == 6){
+        document.write("You Win!")
 
+    }
 
-
-//move the letter "S" from one cell to another.(.append)
-
-// IF the cell has a "W" in it do not go into it.
-//IF the cell has a "F" in it , win the game.
-
-//set coordiantes for the board? so that I can tell the arrows where to place the "S" 
-//with the click handler
-
-
-
-//spliting my map array into an array of arrays
-let ArraySize = 15;
-let newMap = [];
-map.forEach((item)=>{
-    if(!newMap.length||newMap[newMap.length-1].length ==ArraySize)
-    newMap.push([]);
-    newMap[newMap.length-1].push(item)
 }
-)
-
-console.log(newMap)
-
-function findCoordiantes(x , y){
-    let  = newMap[x][y]
-    return W
-}
-console.log(findCoordiantes())
 
